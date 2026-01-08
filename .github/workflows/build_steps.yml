@@ -86,11 +86,14 @@ jobs:
 
       - name: Convert to Full Clone
         run: |
+          echo "access_key $AWS_ACCESS_KEY_ID"
           git config --global --add safe.directory /__w/ArcticDB/ArcticDB
           git submodule update --init --recursive
           cd cpp/vcpkg
           git submodule update --init --recursive
           cd ../..
+        env:
+          AWS_ACCESS_KEY_ID: ${{env.AWS_ACCESS_KEY_ID || ''}}
 
       - name: Configure sccache
         uses: mozilla-actions/sccache-action@v0.0.9
